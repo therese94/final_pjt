@@ -8,6 +8,6 @@
     "emmet.includeLanguages": {
         "django-html": "html"
     },
-    "python.pythonPath": "C:\\Users\\student\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+    "python.pythonPath": "movie-back\\venv\\Scripts\\python",
 
 }
