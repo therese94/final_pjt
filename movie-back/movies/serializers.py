@@ -7,7 +7,7 @@ User = get_user_model()
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('title', 'audience', 'description', 'genres', 'liked_users',)
+        fields = ('title', 'audience', 'poster_url', 'description', 'genres', 'liked_users',)
 
 
 class MoviesSerializer(serializers.Serializer):

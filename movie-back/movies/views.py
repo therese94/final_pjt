@@ -9,12 +9,12 @@ User = get_user_model()
 
 
 @api_view(['GET'])
-def index(request):
-    movies = get_list_or_404(Movie)
-    for a in movies:
-        print(a)
+def index(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    # for a in movies:
+    #     print(a)
     # print(movies)
-    serializers = MoviesSerializer(instance=movies)
+    serializer = MovieSerializer(instance=movie)
     # if serializer.is_valid(raise_exception=True):
     #     serializer.save()
-    return Response(serializers.data)
+    return Response(serializer.data)

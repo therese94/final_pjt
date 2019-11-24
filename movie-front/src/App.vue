@@ -9,6 +9,10 @@
   </div>
 </template>
 
+<script>
+// import router from '@/router'
+</script>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
