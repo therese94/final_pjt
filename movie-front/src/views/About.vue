@@ -8,6 +8,7 @@
       <img :src="movie.poster_url" width="300" alt="poster">
       <div>관람객 수: {{ movie.audience }}</div>
       <div>영화 설명: {{ movie.description }}</div>
+      <div>영화 장르: {{ movie.genres }}</div>
     </div>
   </div>
 </template>
