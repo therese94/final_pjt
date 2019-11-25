@@ -3,6 +3,7 @@
     <div id="nav">
       <h1>JUNE'S MOVIE</h1>
       <h2>Pull Request 잘 되는지 확인</h2>
+      <h2>Pull Request 잘 되는지 확인2</h2>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
