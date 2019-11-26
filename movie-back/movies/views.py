@@ -22,7 +22,8 @@ def index(request, movie_id):
     return Response(serializer.data)
 
 def make_db(request):
-    for i in range(5):
+    title_dict = {}
+    for i in range(10):
         targetDt = datetime(2019, 11, 24) - timedelta(weeks=(i))
         targetDt = targetDt.strftime('%Y%m%d')
 
@@ -40,8 +41,8 @@ def make_db(request):
             movie = Movie()
 
             BASE_URL = 'https://openapi.naver.com/v1/search/movie.json'
-            CLIENT_ID = config('CLIENT_ID')
-            CLIENT_SECRET = config('CLIENT_SECRET')
+            CLIENT_ID = 'm0YexGybNHVSbIufIkoM'
+            CLIENT_SECRET = 'Wf5J1MVe_H'
             HEADERS = {
                 'X-Naver-Client-id': CLIENT_ID,
                 'X-Naver-Client-Secret': CLIENT_SECRET,
@@ -49,27 +50,27 @@ def make_db(request):
 
             movie_list = []
             query = data['movieNm']
+            # 이미 DB에 저장했다면 저장하지 않는다.
+            if title_dict.get(query) == 1:
+                continue
+
             API_URL = f'{BASE_URL}?query={query}'
 
+            response = requests.get(API_URL, headers=HEADERS).json()
+            
             try:
-                response = requests.get(API_URL, headers=HEADERS).json()
-            except IndexError:
-                pass
-
-            try:
-                movie.poster_url = response['items'][0].get('image')
-            except IndexError:
-                pass
-
-            movie.title = data['movieNm']
-            movie.audiAcc = data['audiAcc']
-
-            try:
-                temp_link = response['items'][0]['link']
+                response_items = response['items'][0]
             except IndexError:
                 pass
             
-            # print(temp_link)
+            if response_items:
+                movie.poster_url = response_items.get('image')
+                temp_link = response_items.get('link')
+            movie.poster_url
+            movie.title = data['movieNm']
+            movie.audiAcc = data['audiAcc']
+            title_dict[data['movieNm']] = 1
+
             new_response = requests.get(temp_link)
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
@@ -83,3 +84,5 @@ def make_db(request):
             movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
             print(movie.description)
             movie.save()
+
+    return
