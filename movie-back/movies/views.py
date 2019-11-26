@@ -81,6 +81,8 @@ def make_db(request):
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
             # pprint(soup)
+
+            # .find('p' ,'.h_story').get_text()
             detail_title = soup.select('.h_story')
             detail_subtitle = soup.select('.h_tx_story')
             detail_content = soup.select('.con_tx')

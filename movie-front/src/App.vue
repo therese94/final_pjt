@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <div id="nav">
-      <h1>JUNE'S MOVIE</h1>
+      <router-link to="/"><h1><strong>MOOVING</strong></h1></router-link>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <span v-if="isLoggedIn">
         <a @click.prevent="logout" href="/logout">Logout</a> |
+        <router-link to="/mypage">MyPage</router-link> |
       </span>
       <span v-else>
         <router-link to="/login">Login</router-link> |
@@ -65,6 +66,6 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  /* color: #42b983; */
 }
 </style>

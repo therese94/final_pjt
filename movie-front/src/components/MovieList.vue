@@ -1,29 +1,39 @@
 <template>
-  <div class="todo-list">
-    <div class="w-25 m-0 mh-50 p-0 float-left d-block" v-for="movie in movies" :key="movie.id">
-      <p>영화 제목: {{ movie.title }} </p>
-      <!-- <div>관람객 수: {{ movie.audiAcc }}</div> -->
-      <img :src="movie.poster_url" width="200" alt="poster">
-      <hr>
-      <!-- <div>영화 설명: {{ movie.description }}</div> -->
-      <!-- <div>영화 장르: {{ movie.genres }}</div> -->
-    </div>
+  <div class="Movie-list">
+    <!-- <select class="form-control">
+      <option>
+      </option>
+    </select> -->
+    <MovieListItem v-for="movie in movies" v-bind:key="movie.id" :movie="movie"/>
   </div>
 </template>
 
 <script>
+import MovieListItem from './MovieListItem.vue'
 
 export default {
   name: 'MovieList',
+  components: {
+    MovieListItem,
+  },
+  data() {
+    return {
+    }
+  },
   props: {
     movies: {
       type: Array,
       required: true,
     }
-  }
+  },
+  // mounted() {
+  //   console.log('아래에 출력')
+  //   console.log(this.movies)
+  // },
 }
 </script>
 
 <style>
+.movie_content { height: 250px; margin-bottom: 20px; }
 
 </style>
