@@ -12,6 +12,49 @@ from decouple import config
 from pprint import pprint
 import bs4
 
+#########################################################################################
+# django search-filter
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+class TestView(ListCreateAPIView):
+    name = "test-list-create"
+    serializer_class = MovieSerializer
+    # queryset = Movie.objects.all()
+
+    # filter_backends = [SearchFilter, DjangoFilterBackend]
+
+    # filter_fields = ['type']
+    # search_fields = ['type', 'description']
+    def get_queryset(self):
+        queryset = Movie.objects.all()
+        return queryset
+        
+    def list(self, request, *args, **kwargs):
+        queryset = self.set_filters( self.get_queryset(), request )
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def set_filters(self, queryset, request):
+        type = request.query_params.get('type', None)
+        description = request.query_params.get('description', None)
+        
+        if type is not None:
+            queryset = queryset.filter(type=type)
+        
+        if description is not None:
+            queryset = queryset.filter(description__contains=description)
+            return queryset
+
+
+class TestRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    name = "test-retrieve-update-destroy"
+    serializer_class = MovieSerializer
+    queryset = Movie.objects.all()
+
+########################################################################################
+
 @api_view(['GET'])
 def index(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)

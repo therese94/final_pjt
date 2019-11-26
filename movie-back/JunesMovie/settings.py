@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +47,37 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# view 함수로 들어가기 전 인증 및 로그인 여부를 확인해주는 세팅
+# 얘가 있으면 자동으로 jwt를 확인한다는 뜻
+REST_FRAMEWORK = {
+    # 로그인 여부를 확인해주는 클래스
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+
+    # 인증여부를 확인하는 클래스
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    # token 을 서명할 시크릿 키를 등록(절대 외부 노출 금지)
+    'JWT_SECRET_KEY': SECRET_KEY, # default가 settings.SECRET_KEY임 하지만 명시적으로 사용합시다.
+    'JWT_ALGORITHM': 'HS256', # 기본
+    'JWT_ALLOW_REFRESH': True, # 토큰을 새로 발급해주는 옵션?
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=10),  # 유효기간, import datetime 필요
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28), # 28일 마다 토큰이 갱신(유효기간 연장 시)
+
+    # 로그인할때는 두개의 토큰이 발행
+    #1 access token -> 어떤 요청을 보낼때마다 필요한 토큰
+    #2 refresh token -> access token을 보낼때마다 필요한 토큰... 사용자 편의를 위한것?
+
+}
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -68,7 +101,7 @@ ROOT_URLCONF = 'JunesMovie.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'review', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

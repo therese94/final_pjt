@@ -8,6 +8,23 @@ from .serializers import UserSerializer
 User = get_user_model()
 # from django.conf import settings
 
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from .forms import CustomUserCreationForm
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('http://localhost:8080/')
+        # 회원가입 로직
+        
+    else:   # GET
+        form = CustomUserCreationForm()
+    context = {'form': form}
+    return render(request, 'accounts/signup.html', context)
+
 
 @api_view(['GET'])
 def index(request, user_id):
