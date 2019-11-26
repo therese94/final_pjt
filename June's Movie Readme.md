@@ -16,10 +16,12 @@ $ npm install -g vue
 $ npm i -g @vue/cli
 $ npm i axios
 $ npm i bootstrap bootstrap-vue
-이쪽은 아직 필요하지 않은 부분
 $ npm install -g webpack
 $ npm i vue-session
 $ npm i jwt-decode
+
+# 필요한지 아닌지 잘 모름.
+$ npm i vue-loader
 ```
 
 ## movie-back setting
