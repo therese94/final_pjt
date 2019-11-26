@@ -50,19 +50,21 @@ INSTALLED_APPS = [
 
 # view 함수로 들어가기 전 인증 및 로그인 여부를 확인해주는 세팅
 # 얘가 있으면 자동으로 jwt를 확인한다는 뜻
-REST_FRAMEWORK = {
-    # 로그인 여부를 확인해주는 클래스
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
 
-    # 인증여부를 확인하는 클래스
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
+# 여기는 로그인이 있어야 Rest_framework
+# REST_FRAMEWORK = {
+#     # 로그인 여부를 확인해주는 클래스
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+
+#     # 인증여부를 확인하는 클래스
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
 
 JWT_AUTH = {
     # token 을 서명할 시크릿 키를 등록(절대 외부 노출 금지)
