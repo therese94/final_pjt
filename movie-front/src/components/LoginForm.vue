@@ -13,8 +13,6 @@
     <div v-else class="login-form">
 
       <div class="alert alert-danger" v-if="errors.length" >
-        <h4>다음 오류를 해결해주세요</h4>
-        <hr>
         <div v-for="(error, idx) in errors" v-bind:key="idx"> {{ error }} </div>
       </div>
 

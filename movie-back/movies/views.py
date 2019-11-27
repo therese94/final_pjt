@@ -92,6 +92,9 @@ def make_db(request):
            
 
             movie.poster_url = poster_temp
+
+            print(detail_content)
+            print(poster_temp)
             # detail_content = soup.find('.con_tx').getText()
 
             # detail_title = str(detail_title)

@@ -1,11 +1,11 @@
 <template>
   <div class="todo-input">
-    <form class="input-group mb-3" @submit.prevent="onSubmit">
+    <form class="input-group mb-3 search-bar" @submit.prevent="onSubmit">
       <input v-model="title" type="text" class="form-control">
       <button type="submit" class="btn btn-success">검색</button>
     </form>
-    <div v-if="show_on == true">
-      <h2>검색 결과입니다.</h2>
+    <div class="search-result" v-if="show_on == true">
+      <h3>영화를 찾았어요!</h3>
       <p>제목: {{ movie.title }}</p>
       <div>관람객 수: {{ movie.audiAcc }}</div>
       <img :src="movie.poster_url" width="200" alt="poster">
@@ -63,5 +63,6 @@ export default {
 </script>
 
 <style>
-
+  .search-bar { margin-bottom: 100px; }
+  .search-result { margin: 50px 0;}
 </style>

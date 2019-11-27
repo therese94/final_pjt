@@ -34,6 +34,7 @@ export default {
 </script>
 
 <style>
-.movie_content { height: 250px; margin-bottom: 20px; }
-
+.Movie-list { width: 1200px; overflow: auto; }
+.movie_content { width: 300px; height: 480px; margin-top: 15px; padding: 30px 0; border-bottom: 1px solid #ededed; }
+.movie_content img { width: 80%; }
 </style>

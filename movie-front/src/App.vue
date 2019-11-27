@@ -3,8 +3,8 @@
     <div id="nav">
       <router-link to="/" class="main_logo"><h1><img alt="Vue logo" src="./assets/main/main_logo.png"></h1></router-link>
       <div class="nav_wrap">
-        <router-link to="/" class="nav_menu">HOME</router-link>
         <router-link to="/about" class="nav_menu">MOVIE</router-link>
+        <router-link to="/story" class="nav_menu">STORY</router-link>
         <span v-if="isLoggedIn">
           <router-link to="/mypage" class="nav_menu">MY PAGE</router-link>
           <a @click.prevent="logout" href="/logout" class="nav_menu">LOGOUT</a>
