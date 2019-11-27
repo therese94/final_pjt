@@ -15,6 +15,10 @@
         <!-- 영화 설명을 출력하세요. -->
         <div>관람객 수: {{ movie.audiAcc }}</div>
         <img class="movie--poster my-3" v-bind:src="movie.poster_url" v-bind:alt="movie.name">
+
+        <!-- 볼래요 및 평점 리뷰가 들어갈 부분 -->
+        <button class="btn btn-success" v-on:click="bolraeyo">볼래요</button>
+
         <p>{{ movie.description }}</p>
       </div>
       <div class="modal-footer">
@@ -26,6 +30,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapGetters } from 'vuex'
+
+
 export default {
   name: 'MovieDetail',
   // 0. props 데이터를 받이 위하여 설정하시오.
@@ -36,12 +44,41 @@ export default {
     return {
     }
   },
+  computed: {
+    ...mapGetters([
+      'isLoggedIn',
+      'options',
+      'userId'
+    ])
+  },
 
   props: {
     movie: {
       type: Object,
       required: true,
     }
+  },
+  methods: {
+    bolraeyo() {
+      const SERVER_IP = 'http://127.0.0.1:8000'
+      console.log('일단 패스')
+      console.log(this.userId)
+      console.log(this.movie)
+
+      const data = {
+        movie_id: this.movie.id,
+        user: this.userId
+      }
+
+      axios.post(`${SERVER_IP}/accounts/potential/${data.user}/${data.movie_id}/`, data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+    },
   },
 }
 </script>

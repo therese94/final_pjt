@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from movies.models import Movie
 # from .models import Movie, Genre, Review, StarRate
 # from .models import User
 from .serializers import UserSerializer
@@ -33,3 +34,18 @@ def index(request, user_id):
     serializer = UserSerializer(instance=user)
     print(serializer)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def potential(request, user_id, movie_id):
+    user = get_object_or_404(User, pk=user_id)
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if user.potential_movies.filter(pk=movie_id).exists(): # 1개의 데이터라도 존재하면 True
+        user.potential_movies.remove(movie)
+    else:
+        user.potential_movies.add(movie)
+    # user.
+    print(user.pk)
+    print(movie.title)
+    # print(user.potential_movies)
+    return Response('message')

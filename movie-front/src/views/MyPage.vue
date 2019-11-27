@@ -23,7 +23,7 @@ export default {
   },
   methods:{
     getMyinfo() {
-      axios.get(`http://127.0.0.1:8000/accounts/9/`)
+      axios.get(`http://127.0.0.1:8000/accounts/2/`)
       .then(response => {
         this.infos = response.data
         console.log(this.infos.potential_movies)

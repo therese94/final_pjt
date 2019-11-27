@@ -29,7 +29,7 @@ def detail(request, movie_id):
 
 def make_db(request):
     title_dict = {}
-    for i in range(10):
+    for i in range(20):
         targetDt = datetime(2019, 11, 24) - timedelta(weeks=(i))
         targetDt = targetDt.strftime('%Y%m%d')
 

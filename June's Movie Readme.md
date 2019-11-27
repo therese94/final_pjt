@@ -22,6 +22,11 @@ $ pip install django
 $ pip install djangorestframework
 $ pip install djangorestframework-jwt
 $ pip install django-cors-headers
+
+# 아래는 DB 가져오는 function
+$ pip install beautifulsoup4
+$ pip install requests
+$ pip install python-decouple
 ```
 
 ## 11/24 작업
