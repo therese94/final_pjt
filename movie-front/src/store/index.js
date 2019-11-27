@@ -8,6 +8,8 @@ export default new Vuex.Store({
   // 상태 (data)
   state: {
     token: null,
+    movies: [],
+    users: [],
   },
   // same with computed
   getters: {
@@ -32,7 +34,10 @@ export default new Vuex.Store({
     setToken(state, token) {
       state.token = token
       // 상태를 정의했고 변경하는 함수를 만들었다.
-    }
+    },
+    setMovies(state, movies) {
+      state.movies = movies
+    },
   },
   // method
   actions: {

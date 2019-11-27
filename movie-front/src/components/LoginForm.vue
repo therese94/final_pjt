@@ -60,11 +60,13 @@ export default {
         // 포스트로만 받을 수 있기 때문에 포스트로 바꾸고
         axios.post(SERVER_IP+'/api-token-auth/', this.credentials)
           .then(response => {
-
             // vue-session 사용하기
+            console.log(response.data)
             this.$session.start() // 세션을 초기화 하겠다.
             this.$session.set('jwt', response.data.token) // 응답 결과를 세션에 저장하겠다. (key, value)
 
+            // 이거 뭐지...? 왜 이거때문에 되는지 정확히 이해가 안되네.
+            this.$store.dispatch('login', response.data.token)
             this.loading = false // 로그인 요청 완료
 
             router.push('/') // vue-router로 특정 페이지로 이동 즉 세션이 끝난 뒤에는 홈으로 보내겠다.

@@ -29,7 +29,7 @@ def detail(request, movie_id):
 
 def make_db(request):
     title_dict = {}
-    for i in range(10):
+    for i in range(20):
         targetDt = datetime(2019, 11, 24) - timedelta(weeks=(i))
         targetDt = targetDt.strftime('%Y%m%d')
 
@@ -72,7 +72,7 @@ def make_db(request):
             if response_items:
                 # movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
-            # movie.poster_url
+
             movie.title = data['movieNm']
             movie.audiAcc = data['audiAcc']
             title_dict[data['movieNm']] = 1
@@ -80,27 +80,16 @@ def make_db(request):
             new_response = requests.get(temp_link)
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
-            # pprint(soup)
-
-            # .find('p' ,'.h_story').get_text()
             
-            # detail_title = soup.find('h4 > .h_story')
+            poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
+            movie.poster_url = poster_temp
+
+
             detail_content = soup.select('.con_tx')
             detail_content = detail_content[0].getText()
-
-            poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
-           
-
-            movie.poster_url = poster_temp
-            # detail_content = soup.find('.con_tx').getText()
-
-            # detail_title = str(detail_title)
-            # detail_subtitle = str(detail_subtitle)
-            # detail_content = str(detail_content)
-            # movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
-            # movie.description = detail_title
-            print(detail_content)
-            print(poster_temp)
-            # movie.save()
+            movie.description = detail_content
+            print(movie.poster_url)
+            # print(movie.description)
+            movie.save()
 
     return

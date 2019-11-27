@@ -30,6 +30,7 @@ export default {
   //   console.log('아래에 출력')
   //   console.log(this.movies)
   // },
+  
 }
 </script>
 
