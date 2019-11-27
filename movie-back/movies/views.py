@@ -70,9 +70,9 @@ def make_db(request):
                 pass
             
             if response_items:
-                movie.poster_url = response_items.get('image')
+                # movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
-            movie.poster_url
+            # movie.poster_url
             movie.title = data['movieNm']
             movie.audiAcc = data['audiAcc']
             title_dict[data['movieNm']] = 1
@@ -83,14 +83,24 @@ def make_db(request):
             # pprint(soup)
 
             # .find('p' ,'.h_story').get_text()
-            detail_title = soup.select('.h_story')
-            detail_subtitle = soup.select('.h_tx_story')
+            
+            # detail_title = soup.find('h4 > .h_story')
             detail_content = soup.select('.con_tx')
-            detail_title = str(detail_title)
-            detail_subtitle = str(detail_subtitle)
-            detail_content = str(detail_content)
-            movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
-            print(movie.description)
-            movie.save()
+            detail_content = detail_content[0].getText()
+
+            poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
+           
+
+            movie.poster_url = poster_temp
+            # detail_content = soup.find('.con_tx').getText()
+
+            # detail_title = str(detail_title)
+            # detail_subtitle = str(detail_subtitle)
+            # detail_content = str(detail_content)
+            # movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
+            # movie.description = detail_title
+            print(detail_content)
+            print(poster_temp)
+            # movie.save()
 
     return

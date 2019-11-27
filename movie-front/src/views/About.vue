@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Movie Information Page</h1>
+    <h2><img alt="mooving" class="mooving_gif" src="../assets/main/mooving_animation.gif"></h2>
     <FindBar :movies="movies"/>
     <MovieList :movies="movies"/>
     <!-- <MyPage :movies="movies"/> -->
@@ -48,3 +48,8 @@ export default {
 }
 
 </script>
+
+<style>
+.about { width: 1200px; margin: 0 auto; }
+.mooving_gif { width: 250px; height: 250px; }
+</style>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    로그인페이지
     <LoginForm/>
   </div>
 </template>
