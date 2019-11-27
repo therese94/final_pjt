@@ -11,6 +11,9 @@ $ npm install -g webpack
 $ npm i vue-session
 $ npm i jwt-decode
 
+$ npm install -g firebase-tools
+firebase를 사용하는 툴을 설치.
+
 # 필요한지 아닌지 잘 모름.
 $ npm i vue-loader
 ```

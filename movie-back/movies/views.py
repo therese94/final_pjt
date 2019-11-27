@@ -72,7 +72,7 @@ def make_db(request):
             if response_items:
                 movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
-            movie.poster_url
+            # print(movie.poster_url)
             movie.title = data['movieNm']
             movie.audiAcc = data['audiAcc']
             title_dict[data['movieNm']] = 1
@@ -80,17 +80,12 @@ def make_db(request):
             new_response = requests.get(temp_link)
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
-            # pprint(soup)
+            
 
-            # .find('p' ,'.h_story').get_text()
-            detail_title = soup.select('.h_story')
-            detail_subtitle = soup.select('.h_tx_story')
             detail_content = soup.select('.con_tx')
-            detail_title = str(detail_title)
-            detail_subtitle = str(detail_subtitle)
-            detail_content = str(detail_content)
-            movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
-            print(movie.description)
-            movie.save()
+            detail_content = detail_content[0].getText()
+            movie.description = detail_content
+            # print(movie.description)
+            # movie.save()
 
     return

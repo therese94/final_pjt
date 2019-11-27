@@ -11,6 +11,7 @@
       <button class="btn btn-success" v-on:click="follow(user)">{{ user.username }}</button>
     </span>
     <h2>당신이 팔로우한 사람들</h2>
+    <FollowersList :following_users="following_users"/>
     <!-- <span v-for="id in following_users">
       users.
     </span> -->
@@ -24,19 +25,22 @@
 <script>
 import axios from 'axios'
 import MovieList from '../components/MovieList'
+import FollowersList from '../components/FollowersList'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'MyPage',
   components: {
     MovieList,
+    FollowersList,
   },
   data() {
     return {
       movies: [],
       infos: [],
       users: [],
-      // following_users: [],
+      following_users: [],
+      temp: [],
     }
   },
   computed: {
@@ -46,22 +50,34 @@ export default {
   },
   methods:{
     getMyinfo() {
-      // const data = {
-      //   user_id: this.userId
-      // }
-      
-      // console.log(this.userId)
-      axios.get(`http://127.0.0.1:8000/accounts/${this.userId}/`)
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/accounts/${this.userId}/`)
       .then(response => {
         this.infos = response.data
         // console.log(this.infos.potential_movies)
         const temp = this.infos.potential_movies
         for (let index = 0; index < temp.length; index++) {
-          axios.get(`http://127.0.0.1:8000/movies/${temp[index]}/`)
+          axios.get(`${SERVER_IP}/movies/${temp[index]}/`)
           .then(response => {
             this.movies.push(response.data)
           })
         }
+
+        axios.get(`${SERVER_IP}/accounts/${this.userId}/`)
+        .then(response => {
+          const id_list = response.data.followers
+          const temp = []
+          for (let index = 0; index < id_list.length; index++) {
+            var user_id = id_list[index]
+            axios.get(`${SERVER_IP}/accounts/${user_id}/`)
+              .then(response => {
+                temp.push(response.data)
+            })
+          }
+          this.following_users = temp
+          console.log(this.following_users)
+        })
+
         // console.log(this.infos)
         // const following_users_id = this.infos.followers
         // for (let index = 0; index < following_users_id.length; index++) {
@@ -81,33 +97,51 @@ export default {
       })
     },
     getUsers() {
-      axios.get('http://127.0.0.1:8000/accounts/')
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/accounts/`)
       .then(response => {
         this.users = response.data
-        // console.log(this.users)
       })
     },
     follow(user) {
-      const SERVER_IP = 'http://127.0.0.1:8000'
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
       const data = {
         following_id: user.id,
         user: this.userId
       }
-      console.log(data)
       axios.post(`${SERVER_IP}/accounts/follow/${data.user}/${data.following_id}/`)
+      
+      axios.get(`${SERVER_IP}/accounts/${data.user}/`)
         .then(response => {
-          console.log(response)
+          const id_list = response.data.followers
+          const temp = []
+          for (let index = 0; index < id_list.length; index++) {
+            var user_id = id_list[index]
+            axios.get(`${SERVER_IP}/accounts/${user_id}/`)
+              .then(response => {
+                temp.push(response.data)
+            })
+          }
+          this.following_users = temp
+          console.log(this.following_users)
         })
-        .catch(error => {
-          console.log(error)
-        })
-      console.log(this.users[0])
+
+
+        //   if (response.data in this.following_users) {
+        //     this.following_users.pop(response.data)
+        //   } else {
+        //     this.following_users.push(response.data)
+        //   }
+        //   console.log(this.following_users)
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
     },
   },
   mounted() {
     this.getUsers(),
     this.getMyinfo()
-    
   },
   // watch: {
   //   isLoggedIn() {

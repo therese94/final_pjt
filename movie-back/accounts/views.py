@@ -3,11 +3,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from movies.models import Movie
-# from .models import Movie, Genre, Review, StarRate
-# from .models import User
 from .serializers import UserSerializer
 User = get_user_model()
-# from django.conf import settings
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm
@@ -65,4 +62,5 @@ def follow(request, user_id, following_id):
         user.followers.remove(following_user)
     else:
         user.followers.add(following_user)
-    return Response('message')
+    serializer = UserSerializer(instance=following_user)
+    return Response(serializer.data)

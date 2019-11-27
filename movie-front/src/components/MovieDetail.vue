@@ -36,10 +36,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'MovieDetail',
-  // 0. props 데이터를 받이 위하여 설정하시오.
-  // movie 타입은 Object이며, 필수입니다.
-  // 설정이 완료 되었다면, 상위 컴포넌트에서 값을 넘겨 주세요.
-  // 그리고 적절한 곳에 사용하세요.
+  
   data () {
     return {
     }
@@ -60,10 +57,7 @@ export default {
   },
   methods: {
     bolraeyo() {
-      const SERVER_IP = 'http://127.0.0.1:8000'
-      console.log('일단 패스')
-      console.log(this.userId)
-      console.log(this.movie)
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
 
       const data = {
         movie_id: this.movie.id,
