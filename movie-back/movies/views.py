@@ -70,7 +70,7 @@ def make_db(request):
                 pass
             
             if response_items:
-                movie.poster_url = response_items.get('image')
+                # movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
             # print(movie.poster_url)
             movie.title = data['movieNm']
@@ -81,11 +81,14 @@ def make_db(request):
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
             
+            poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
+            movie.poster_url = poster_temp
 
             detail_content = soup.select('.con_tx')
             detail_content = detail_content[0].getText()
             movie.description = detail_content
+            print(movie.poster_url)
             # print(movie.description)
-            # movie.save()
+            movie.save()
 
     return
