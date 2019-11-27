@@ -19,16 +19,16 @@
       </div>
 
       <div class="form-group">
-      <label for="id">ID</label>  
+      <label for="id" style="float: left; line-height: 38px;">ID</label>  
       <!-- 이 라벨은 인풋의 id를 가리키는 라벨이다. -->
-      <input type="text" id="id" class="form-control" placeholder="아이디를 입력해주세요." v-model="credentials.username" />
+      <input type="text" id="id" class="form-control login-f" v-model="credentials.username" />
     </div>
     <div class="form-group">
-      <label for="password">password</label>  
+      <label for="password" style="float: left; line-height: 38px;">PW</label>  
       <!-- 이 라벨은 인풋의 password를 가리키는 라벨이다. -->
-      <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력해주세요." v-model="credentials.password" @keydown.enter="login" />
+      <input type="password" id="password" class="form-control login-f" v-model="credentials.password" @keydown.enter="login" />
     </div>
-    <button class="btn btn-success" @click="login" >로그인</button>  
+    <button class="login-btn" @click="login" >LOGIN</button>  
     </div>
   </div>
 </template>
@@ -95,5 +95,15 @@ export default {
 </script>
 
 <style>
+.login-div { width: 800px; height: 550px; margin: 0 auto; margin-top: 50px; background-image: url(../assets/main/login_img.png); }
+.login-form { width: 400px; margin: 0 auto; padding-top: 180px; }
+.form-group { width: 400px; height: 50px; }
+#id { width: 330px; float: right; margin-right: 40px; }
+#password { width: 330px; float: right; margin-right: 40px; }
+
+.login-btn { width: 120px; height: 38px; background-color: #f9f2d5; border: 1px solid #231815; }
+.login-btn:hover { background-color: #fce583; }
+
+
 
 </style>

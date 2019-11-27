@@ -72,7 +72,7 @@ def make_db(request):
             if response_items:
                 # movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
-            # print(movie.poster_url)
+
             movie.title = data['movieNm']
             movie.audiAcc = data['audiAcc']
             title_dict[data['movieNm']] = 1
@@ -83,6 +83,7 @@ def make_db(request):
             
             poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
             movie.poster_url = poster_temp
+
 
             detail_content = soup.select('.con_tx')
             detail_content = detail_content[0].getText()
