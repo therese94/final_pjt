@@ -26,9 +26,15 @@ def signup(request):
     context = {'form': form}
     return render(request, 'accounts/signup.html', context)
 
+@api_view(['GET'])
+def index(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
-def index(request, user_id):
+def detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     print(user)
     serializer = UserSerializer(instance=user)
@@ -48,4 +54,15 @@ def potential(request, user_id, movie_id):
     print(user.pk)
     print(movie.title)
     # print(user.potential_movies)
+    return Response('message')
+
+
+@api_view(['POST'])
+def follow(request, user_id, following_id):
+    user = get_object_or_404(User, pk=user_id)
+    following_user = get_object_or_404(User, pk=following_id)
+    if user.followers.filter(pk=following_id).exists(): # 1개의 데이터라도 존재하면 True
+        user.followers.remove(following_user)
+    else:
+        user.followers.add(following_user)
     return Response('message')
