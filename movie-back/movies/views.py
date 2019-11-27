@@ -12,14 +12,20 @@ from decouple import config
 from pprint import pprint
 import bs4
 
+
 @api_view(['GET'])
-def index(request, movie_id):
-    movie = get_object_or_404(Movie, pk=movie_id)
-    print(movie)
-    serializer = MovieSerializer(instance=movie)
-    # if serializer.is_valid(raise_exception=True):
-    #     serializer.save()
+def index(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def detail(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    serializer = MovieSerializer(instance=movie)
+    return Response(serializer.data)
+
 
 def make_db(request):
     title_dict = {}
@@ -75,6 +81,8 @@ def make_db(request):
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
             # pprint(soup)
+
+            # .find('p' ,'.h_story').get_text()
             detail_title = soup.select('.h_story')
             detail_subtitle = soup.select('.h_tx_story')
             detail_content = soup.select('.con_tx')
