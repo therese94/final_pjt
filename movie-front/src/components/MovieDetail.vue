@@ -6,14 +6,22 @@
     <div class="modal-content">
       <div class="modal-header">
         <!-- 영화 제목을 출력하세요. -->
-        
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <!-- 영화 설명을 출력하세요. -->
-        <!-- <div>관람객 수: {{ movie.audiAcc }}</div> -->
+        <!-- 볼래요 및 평점 리뷰가 들어갈 부분 -->
+        <button class="btn btn-success" v-on:click="bolraeyo">볼래요</button>
+        <!-- 평점 리뷰 들어갈 부분 -->
+        <form class="input-group mb-3" @submit.prevent="onSubmit(movie.id)">
+          <input v-model="score" type="text" class="form-control">
+          <input v-model="content" type="text" class="form-control">
+          <button type="submit" class="btn btn-success">리뷰 남기기</button>
+        </form>
+        <div v-for="review in reviews" :key="review.id">
+          작성자: {{ review.user }} 평점: {{ review.score }}  내용: {{ review.content }}
+        </div>
         <div class="description_wrap">
           <h5 class="movie-title"><strong>{{ movie.title }}</strong></h5>
           <!-- <div class="rating">관람 평점 : {{ movie.star_rates }}</div> -->
@@ -31,6 +39,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'MovieDetail',
   // 0. props 데이터를 받이 위하여 설정하시오.
@@ -39,14 +50,66 @@ export default {
   // 그리고 적절한 곳에 사용하세요.
   data () {
     return {
+      score: '',
+      content: '',
     }
   },
-
+  computed: {
+    ...mapGetters([
+      'isLoggedIn',
+      'options',
+      'userId'
+    ])
+  },
   props: {
     movie: {
       type: Object,
       required: true,
-    }
+    },
+    reviews: {
+      type: Array,
+      required: false,
+    },
+  },
+  methods: {
+    bolraeyo() {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      const data = {
+        movie_id: this.movie.id,
+        user: this.userId
+      }
+
+      axios.post(`${SERVER_IP}/accounts/potential/${data.user}/${data.movie_id}/`, data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    onSubmit(movie_id) {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      const user_id = this.userId
+      const data = {
+        score: this.score,
+        content: this.content
+      }
+      axios.post(`${SERVER_IP}/movies/create_review/${movie_id}/${user_id}/`, data)
+        // .then(response => {
+        //   console.log('yes')
+        // })
+      this.get_review(movie_id)
+    },
+
+    get_review(movie_id) {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/movies/review/${movie_id}/`)
+      .then(response => {
+        this.reviews = response.data
+      })
+      console.log(this.reviews)
+    },
   },
 }
 </script>

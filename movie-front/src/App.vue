@@ -20,13 +20,7 @@
 </template>
 
 
-<script src="./assets/js/jquery-1.12.0.min.js"></script>
-<script src="./assets/js/jquery.flexslider-min.js"></script>
-<script src="./assets/js/swiper.min.js"></script>
-<script src="./assets/js/slick.min.js"></script>
-<script src="./assets/js/jquery.flowslider.js"></script>
-<script src="./assets/js/common.js"></script>
-<script src="./assets/js/main.js"></script>
+
 <script>
 import router from '@/router'
 
@@ -60,7 +54,7 @@ export default {
 <style>
 .main_logo { display: block; float: left; width: 300px; height: 100px; }
 #app {
-  width: 1600px; margin: 0 auto;
+  width: 100%; margin: 0 auto;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

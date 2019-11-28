@@ -3,15 +3,13 @@ from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Movie, Genre, Review, StarRate
-from .serializers import MovieSerializer, MoviesSerializer
+from .serializers import MovieSerializer, MoviesSerializer, ReviewSerializer
 User = get_user_model()
-
 import requests, csv
 from datetime import datetime, timedelta
 from decouple import config
 from pprint import pprint
 import bs4
-
 
 @api_view(['GET'])
 def index(request):
@@ -25,8 +23,24 @@ def detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(instance=movie)
     return Response(serializer.data)
-
-
+@api_view(['POST'])
+def create_review(request, movie_id, user_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user = get_object_or_404(User, pk=user_id)
+    review = Review()
+    review.score = request.data['score']
+    review.content = request.data['content']
+    review.movie = movie
+    review.user = user
+    review.save()
+    serializer = ReviewSerializer(instance = review)
+    return Response(serializer.data)
+@api_view(['GET'])
+def review(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    reviews = movie.reviews.all()
+    serializer = ReviewSerializer(instance=reviews, many=True)
+    return Response(serializer.data)
 def make_db(request):
     title_dict = {}
     for i in range(10):
@@ -70,9 +84,7 @@ def make_db(request):
                 pass
             
             if response_items:
-                # movie.poster_url = response_items.get('image')
                 temp_link = response_items.get('link')
-            # movie.poster_url
             movie.title = data['movieNm']
             movie.audiAcc = data['audiAcc']
             title_dict[data['movieNm']] = 1
@@ -80,30 +92,10 @@ def make_db(request):
             new_response = requests.get(temp_link)
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
-            # pprint(soup)
-
-            # .find('p' ,'.h_story').get_text()
-            
-            # detail_title = soup.find('h4 > .h_story')
             detail_content = soup.select('.con_tx')
             detail_content = detail_content[0].getText()
-
             poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
-           
-
             movie.poster_url = poster_temp
-
-            print(detail_content)
-            print(poster_temp)
-            # detail_content = soup.find('.con_tx').getText()
-
-            # detail_title = str(detail_title)
-            # detail_subtitle = str(detail_subtitle)
-            # detail_content = str(detail_content)
-            # movie.description = detail_title + '\n' + detail_subtitle + '\n' + detail_content
-            # movie.description = detail_title
-            print(detail_content)
-            print(poster_temp)
-            # movie.save()
+            movie.save()
 
     return

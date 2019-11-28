@@ -13,7 +13,7 @@ import axios from 'axios'
 // import router from '@/router'
 import MovieList from '../components/MovieList'
 import FindBar from '../components/FindBar'
-// import MyPage from '../components/MyPage'
+
 
 export default {
   name: 'About',
@@ -25,7 +25,6 @@ export default {
   components:{
     MovieList,
     FindBar,
-    // MyPage,
   },
   methods:{
     getMovie() {

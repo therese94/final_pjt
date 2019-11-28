@@ -1,19 +1,15 @@
 <template>
   <div class="movie_content w-25 float-left d-block">
     <p><strong> {{ movie.title }} </strong></p>
-    <!-- <div>관람객 수: {{ movie.audiAcc }}</div> -->
     <img :src="movie.poster_url" width="110" alt="poster" data-toggle="modal" :data-target="`#movie_${movie.id}`">
-    <!-- <div>영화 설명: {{ movie.description }}</div> -->
-    <!-- <div>영화 장르: {{ movie.genres }}</div> -->
     <br>
-    <!-- {{ movie.id }}출력 -->
-    <!-- <button class="btn btn-primary" data-toggle="modal" :data-target="`#movie_${movie.id}`">영화 정보 상세보기</button> -->
-    <MovieDetail v-bind:movie="movie"/>
+    <MovieDetail v-bind:movie="movie" :reviews="reviews"/>
   </div>
 </template>
 
 <script>
 import MovieDetail from './MovieDetail.vue'
+import axios from 'axios'
 
 export default {
   name: 'MovieListItem',
@@ -22,6 +18,7 @@ export default {
   },
   data() {
     return {
+      reviews: [],
     }
   },
   props: {
@@ -30,10 +27,16 @@ export default {
       required: true,
     }
   },
-  // mounted() {
-  //   console.log('아래에 출력2')
-  //   console.log(this.movie)
-  // },
+  methods: {
+  get_review(movie_id) {
+    const SERVER_IP = process.env.VUE_APP_SERVER_IP
+    axios.get(`${SERVER_IP}/movies/review/${movie_id}/`)
+    .then(response => {
+      this.reviews = response.data
+    })
+    console.log(this.reviews)
+    },
+  },
 }
 </script>
 

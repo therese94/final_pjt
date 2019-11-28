@@ -62,7 +62,7 @@ export default {
             // vue-session 사용하기
             this.$session.start() // 세션을 초기화 하겠다.
             this.$session.set('jwt', response.data.token) // 응답 결과를 세션에 저장하겠다. (key, value)
-
+            this.$store.dispatch('login', response.data.token)
             this.loading = false // 로그인 요청 완료
 
             router.push('/') // vue-router로 특정 페이지로 이동 즉 세션이 끝난 뒤에는 홈으로 보내겠다.

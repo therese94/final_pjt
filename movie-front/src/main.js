@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import store from './store'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 import SequentialEntrance from 'vue-sequential-entrance'
 import 'vue-sequential-entrance/vue-sequential-entrance.css'
@@ -18,7 +20,20 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueSession)
 
+// new Vue({
+//   created () {
+//     AOS.init()
+//   },
+//   el: '#app',
+//   router,
+//   components: { App },
+//   template: '<App/>'
+// })
+
 new Vue({
+  created () {
+    AOS.init()
+  },
   router,
   store,
   render: h => h(App)
