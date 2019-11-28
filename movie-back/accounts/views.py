@@ -40,18 +40,19 @@ def detail(request, user_id):
 def potential(request, user_id, movie_id):
     user = get_object_or_404(User, pk=user_id)
     movie = get_object_or_404(Movie, pk=movie_id)
-    if user.potential_movies.filter(pk=movie_id).exists(): # 1개의 데이터라도 존재하면 True
+    if user.potential_movies.filter(pk=movie_id).exists():
         user.potential_movies.remove(movie)
+        return Response('bolraeyo')
     else:
         user.potential_movies.add(movie)
-    return Response('message')
+        return Response('cancel')
 
 
 @api_view(['POST'])
 def follow(request, user_id, following_id):
     user = get_object_or_404(User, pk=user_id)
     following_user = get_object_or_404(User, pk=following_id)
-    if user.followers.filter(pk=following_id).exists(): # 1개의 데이터라도 존재하면 True
+    if user.followers.filter(pk=following_id).exists():
         user.followers.remove(following_user)
     else:
         user.followers.add(following_user)

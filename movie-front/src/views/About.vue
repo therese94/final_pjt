@@ -28,10 +28,10 @@ export default {
   },
   methods:{
     getMovie() {
-      axios.get(`http://127.0.0.1:8000/movies/`)
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/movies/`)
       .then(response => {
         this.movies = response.data
-        
       })
       .catch(error => {
         console.error(error)

@@ -40,7 +40,7 @@
         <div class="con01_borderBottom"></div>
       </div>
     </div>
-    
+    <Recommand :following_users="following_users"/>
   </div>
   
 </template>
@@ -48,15 +48,15 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import axios from 'axios'
+import Recommand from '../components/Recommand.vue'
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'home',
   components: {
-    
+    Recommand,
   },
   computed: {
     // getters가 가지고 있는 모든 친구들을 computed 에 쫙 뿌려준다고 생각하면 된다.
@@ -67,30 +67,38 @@ export default {
     ])
   },
   methods: {
-    // 사용자 로그인 유무를 확인하여 로그인되어있지 않을 시 로그인 페이지로 보내겠다.
     checkLoggedIn() {
-
-      // 여기도 이제 필요 없어짐에 따라 지우는 것.
-      // 1. 세션을 시작해서
-      // this.$session.start()
-      // 2. 'jwt' 가 있는지 확인하겠다.
-      // if(!this.$session.has('jwt')){
-
       if(!this.isLoggedIn) {
-        // 로그인 페이지로 보내겠다.
         router.push('/login')
       }
     },
-    mounted() {
-      if (this.isLoggedIn){
-        this.checkLoggedIn()
-      }
+    find_followers() {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/accounts/${this.userId}/`)
+        .then(response => {
+          const id_list = response.data.followers
+          const temp = []
+          for (let index = 0; index < id_list.length; index++) {
+            var user_id = id_list[index]
+            axios.get(`${SERVER_IP}/accounts/${user_id}/`)
+            .then(response => {
+              temp.push(response.data)
+            })
+          }
+          this.following_users = temp
+          console.log(this.following_users)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     },
-    // watch: {
-    //   isLoggedIn() {
-    //   }
-    // },
   },
+  mounted() {
+      // if (this.isLoggedIn){
+      //   this.checkLoggedIn()
+      // }
+      this.find_followers()
+    },
 }
 
 </script>

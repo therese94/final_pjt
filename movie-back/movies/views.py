@@ -28,20 +28,36 @@ def detail(request, movie_id):
 def create_review(request, movie_id, user_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     user = get_object_or_404(User, pk=user_id)
+    reviews = movie.reviews.all()
+    for review in reviews:
+        if str(review.user) == user.username:
+            return Response({'message':'Comment is existed'})
     review = Review()
-    review.score = request.data['score']
-    review.content = request.data['content']
     review.movie = movie
     review.user = user
+    review.score = request.data['score']
+    review.content = request.data['content']
     review.save()
     serializer = ReviewSerializer(instance = review)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+    review.delete()
+    return Response(status=204)
 
 @api_view(['GET'])
 def review(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     reviews = movie.reviews.all()
     serializer = ReviewSerializer(instance=reviews, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def review_detail(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+    serializer = ReviewSerializer(instance=review)
     return Response(serializer.data)
     
 def make_db(request):

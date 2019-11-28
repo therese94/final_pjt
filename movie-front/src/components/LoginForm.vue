@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style>
-.login-div { width: 800px; height: 550px; margin: 0 auto; margin-top: 50px; background-image: url(../assets/main/login_img.png); }
+.login-div { width: 800px; height: 550px; margin: 0 auto; margin-top: 100px; background-image: url(../assets/main/login_img.png); }
 .login-form { width: 400px; margin: 0 auto; padding-top: 180px; }
 .form-group { width: 400px; height: 50px; }
 #id { width: 330px; float: right; margin-right: 40px; }

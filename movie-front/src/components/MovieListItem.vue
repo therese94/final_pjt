@@ -1,13 +1,13 @@
 <template>
   <div class="movie_content w-25 float-left d-block">
     <p class="movie-title"> {{ movie.title }} </p>
-    <img :src="movie.poster_url" alt="poster" data-toggle="modal" :data-target="`#movie_${movie.id}`">
+    <img :src="movie.poster_url" alt="poster" data-toggle="modal" @click="get_review(movie.id)" :data-target="`#movie_${movie.id}`">
     <br>
     <div class="detail-txt-Wrap">
       <span class="genre-txt"> {{ movie.genres }} </span>
       <span class="rating-txt"> {{ movie.audiRating }} </span>
     </div>
-    <MovieDetail v-bind:movie="movie" :reviews="reviews"/>
+    <MovieDetail @get_review="get_review" v-bind:movie="movie" :reviews="reviews"/>
   </div>
 </template>
 
@@ -32,13 +32,18 @@ export default {
     }
   },
   methods: {
-  get_review(movie_id) {
-    const SERVER_IP = process.env.VUE_APP_SERVER_IP
-    axios.get(`${SERVER_IP}/movies/review/${movie_id}/`)
-    .then(response => {
+    async get_review(movie_id) {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      const response = await axios.get(`${SERVER_IP}/movies/review/${movie_id}/`)
       this.reviews = response.data
-    })
-    console.log(this.reviews)
+      console.log(this.reviews)
+
+      for (let index = 0; index < this.reviews.length; index++) {
+        const user_id = this.reviews[index]['user']
+        const response = await axios.get(`${SERVER_IP}/accounts/${user_id}/`)
+        this.reviews[index]['username'] = response.data['username']
+      }
+      console.log(this.reviews)
     },
   },
 }

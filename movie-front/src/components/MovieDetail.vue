@@ -12,7 +12,8 @@
       </div>
       <div class="modal-body">
         <!-- 볼래요 및 평점 리뷰가 들어갈 부분 -->
-        <button class="btn btn-success" v-on:click="bolraeyo">볼래요</button>
+        <button class="btn btn-success" v-on:click="bolraeyo" v-if="bolraeyoTF=='bolraeyo'">볼래요</button>
+        <button class="btn btn-success" v-on:click="bolraeyo" v-if="bolraeyoTF=='cancel'">볼래요 취소</button>
         <!-- 평점 리뷰 들어갈 부분 -->
         <form class="input-group mb-3" @submit.prevent="onSubmit(movie.id)">
           <input v-model="score" type="text" class="form-control">
@@ -21,6 +22,9 @@
         </form>
         <div v-for="review in reviews" :key="review.id">
           작성자: {{ review.user }} 평점: {{ review.score }}  내용: {{ review.content }}
+          <span v-if="review.user===userId">
+            <button class="btn btn-delete" @click="deleteReview(review.id)">삭제</button>
+          </span>
         </div>
         <div class="description_wrap">
           <h5 class="movie-title"><strong>{{ movie.title }}</strong></h5>
@@ -52,6 +56,7 @@ export default {
     return {
       score: '',
       content: '',
+      bolraeyoTF: 'cancel',
     }
   },
   computed: {
@@ -82,33 +87,35 @@ export default {
       axios.post(`${SERVER_IP}/accounts/potential/${data.user}/${data.movie_id}/`, data)
         .then(response => {
           console.log(response)
+          this.bolraeyoTF = response.data
         })
         .catch(error => {
           console.log(error)
         })
     },
 
-    onSubmit(movie_id) {
+    async onSubmit(movie_id) {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP
       const user_id = this.userId
       const data = {
         score: this.score,
         content: this.content
       }
-      axios.post(`${SERVER_IP}/movies/create_review/${movie_id}/${user_id}/`, data)
-        // .then(response => {
-        //   console.log('yes')
-        // })
-      this.get_review(movie_id)
-    },
+      await axios.post(`${SERVER_IP}/movies/create_review/${movie_id}/${user_id}/`, data)
 
-    get_review(movie_id) {
+      this.$emit('get_review', movie_id)
+    },
+    deleteReview(review_id) {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP
-      axios.get(`${SERVER_IP}/movies/review/${movie_id}/`)
-      .then(response => {
-        this.reviews = response.data
-      })
-      console.log(this.reviews)
+      axios.delete(`${SERVER_IP}/movies/delete_review/${review_id}/`)
+        .then(response => {
+          console.log(response)
+          this.reviews.splice(review_id, 1)
+          this.$emit('get_review', this.movie.id)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
   },
 }
