@@ -154,8 +154,8 @@ export default {
   .rating, .audi_cnt { width: 100%; height: 25px; line-height: 30px; font-size: 16px; font-weight: bold; text-align: left; margin-bottom: 15px; }
   .description { text-align: justify; line-height: 30px; font-size: 14px; }
 
-  .poster_wrap { width: 45%; float: right; }
-  .poster_img { width: 300px; float: right; }
+  .poster_wrap { width: 290px; float: right; }
+  .poster_img { width: 290px; float: right; }
 
   /* 볼래요 버튼 */
   .see_btn { box-sizing: border-box; position: absolute; top: 15px; right: 0; width: 75px; height: 35px; background-color: #f9f2d5; border: 1px solid #333; color: #333; font-weight: bold; }

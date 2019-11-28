@@ -37,7 +37,7 @@
       <div class="con01_titleWrap">
         <p class="con01_title"> MOVIE FOR YOU </p>
         <Recommand :following_users="following_users"/>
-        <div class="con01"></div>
+        
         <div class="con01_borderBottom"></div>
       </div>
     </div>
@@ -138,6 +138,6 @@ export default {
   .con01_titleWrap { width: 100%; height: 45px; background-image: url(../assets/main/main_con01_border.png); text-align: center; background-repeat: no-repeat; background-position: center; }
   .con01_title { line-height: 45px; font-size: 26px; opacity: 80%; }
   .con01 { width: 1200px; margin: 0 auto; height: 450px;}
-  .con01_borderBottom {width: 100%; height: 45px; background-image: url(../assets/main/main_con01_border_bottom.png); text-align: center; background-repeat: no-repeat; background-position: center;}
+  .con01_borderBottom {width: 100%; height: 45px; background-image: url(../assets/main/main_con01_border_bottom.png); text-align: center; background-repeat: no-repeat; background-position: center; margin-top: 10px; }
 
 </style>

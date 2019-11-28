@@ -1,5 +1,5 @@
 <template>
-  <div class="movie_content w-25 float-left d-block">
+  <div class="movie_content float-left d-block">
     <p class="movie-title"> {{ movie.title }} </p>
     <img :src="movie.poster_url" alt="poster" data-toggle="modal" @click="get_review(movie.id)" :data-target="`#movie_${movie.id}`">
     <br>

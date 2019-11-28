@@ -1,5 +1,6 @@
 <template>
   <div class="my-page">
+    <div class="mypage_con01Wrap">
     <div class="mypage_con01">
 
       <div class="level_img" v-if="movies.length < 5">
@@ -14,8 +15,9 @@
       <div class="level_img" v-else-if="movies.length < 30">
         <img src="../assets/main/level11.png" alt="레벨 이미지">
       </div>
-      <p class="mypage_title"> {{ infos.username }}님의 MY PAGE</p>
+      <p class="mypage_title"> {{ infos.username }}님의 마이 페이지</p>
       
+    </div>
     </div>
     
 
@@ -130,11 +132,12 @@ export default {
 </script>
 
 <style>
-  .my-page { width: 1200px; margin: 0 auto; }
+  .my-page { width: 100%; margin: 0 auto; }
+  .mypage_con01Wrap { width: 100%; height: 450px; background-color: #282118; margin-bottom: 80px; }
 
-  .mypage_con01{ width: 400px; height: 400px; padding: 40px 0; margin: 0 auto; margin-top: 80px; border: 1.5px solid #282118; margin-bottom: 50px; border-radius: 10px; }
-  .mypage_title { font-size: 24px; color: #282118; font-weight: bolder; margin-top: 30px; margin-bottom: 50px; }
-  .level_img { width: 250px; height: 250px; margin: 0 auto; }
+  .mypage_con01{ width: 400px; height: 400px; padding-top: 50px; margin: 0 auto; margin-top: 80px; border: 1.5px solid #282118; margin-bottom: 100px; border-radius: 10px; }
+  .mypage_title { font-size: 20px; color: #fff; font-weight: bold; margin-top: 20px;  }
+  .level_img { width: 280px; height: 280px; margin: 0 auto; padding: 15px; border: 1px solid #fff; border-radius: 200px; }
   .level_img img { width: 250px; height: 250px; }
 
   .my-page h2 { font-size: 24px; color: #282118; font-weight: bold;  }

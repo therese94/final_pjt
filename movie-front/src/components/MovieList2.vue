@@ -1,5 +1,5 @@
 <template>
-  <div class="Movie-list">
+  <div class="Movie-list2">
     <MovieListItem v-for="movie in movies" v-bind:key="movie.id" :movie="movie"/>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import MovieListItem from './MovieListItem.vue'
 
 export default {
-  name: 'MovieList',
+  name: 'MovieList2',
   components: {
     MovieListItem,
   },
@@ -27,6 +27,6 @@ export default {
 
 <style>
 .Movie-list { width: 1200px; overflow: auto; }
-.movie_content { width: 290px; height: 500px; margin-top: 15px; padding: 30px 0;  }
+.movie_content { width: 300px; height: 480px; margin-top: 15px; padding: 30px 0; border-bottom: 1px solid #ededed; }
 .movie_content img { width: 240px; overflow: hidden; }
 </style>

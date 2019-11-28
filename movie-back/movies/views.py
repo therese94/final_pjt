@@ -59,6 +59,12 @@ def review_detail(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
     serializer = ReviewSerializer(instance=review)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def reviews(request):
+    reviews = Review.objects.all()
+    serializer = ReviewSerializer(instance=reviews, many=True)
+    return Response(serializer.data)
     
 def make_db(request):
     title_dict = {}
