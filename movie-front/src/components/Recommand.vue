@@ -1,18 +1,5 @@
 <template>
   <div class="Recommand-page">
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    <h1>--</h1>
-    
-    여기는 구분
-    <hr>
     <h2>영화 추천 알고리즘</h2>
     <Follower v-for="follower in following_users" v-bind:key="follower.id" :follower="follower"/>
     <!-- <FollowersList :following_users="following_users"/> -->

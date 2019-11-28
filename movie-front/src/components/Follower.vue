@@ -1,7 +1,7 @@
 <template>
   <div>
     <p><strong> {{ follower.username }} 이 재밌게 본 영화! </strong></p>
-    <MovieList :movies="movies"/>
+    <div class="recommend_movie"><MovieList :movies="movies"/></div>
   </div>
 </template>
 
@@ -50,6 +50,7 @@ export default {
     }
   },
   mounted() {
+    console.log('Follower 오는지 확인')
     this.follower_movie()
   },
 }
@@ -58,4 +59,6 @@ export default {
 
 <style>
 /* .movie_content { height: 250px; margin-bottom: 20px; } */
+/* .recommend_movie > div > div { border: 10px solid black; } */
+
 </style>

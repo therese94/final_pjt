@@ -28,5 +28,5 @@ export default {
 <style>
 .Movie-list { width: 1200px; overflow: auto; }
 .movie_content { width: 300px; height: 480px; margin-top: 15px; padding: 30px 0; border-bottom: 1px solid #ededed; }
-.movie_content img { width: 240px; height: 340px; overflow: hidden; }
+.movie_content img { width: 240px; overflow: hidden; }
 </style>

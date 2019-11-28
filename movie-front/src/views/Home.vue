@@ -36,11 +36,12 @@
     <div class="main_content01">
       <div class="con01_titleWrap">
         <p class="con01_title"> MOVIE FOR YOU </p>
+        <Recommand :following_users="following_users"/>
         <div class="con01"></div>
         <div class="con01_borderBottom"></div>
       </div>
     </div>
-    <Recommand :following_users="following_users"/>
+    
   </div>
   
 </template>
@@ -57,6 +58,11 @@ export default {
   name: 'home',
   components: {
     Recommand,
+  },
+  data() {
+    return {
+      following_users: [],
+    }
   },
   computed: {
     // getters가 가지고 있는 모든 친구들을 computed 에 쫙 뿌려준다고 생각하면 된다.
