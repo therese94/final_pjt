@@ -1,10 +1,26 @@
 <template>
   <div class="my-page">
-    <h1>This is your Page. Enjoy your Life!</h1>
-    <h1>환영합니다. {{ infos.username }} 님</h1>
-    <h2>볼래요한 영화 목록!!</h2>
+    <div class="mypage_con01">
+
+      <div class="level_img" v-if="movies.length < 5">
+        <img src="../assets/main/level01.png" alt="레벨 이미지">
+      </div>
+      <div class="level_img" v-else-if="movies.length < 10">
+        <img src="../assets/main/level02.png" alt="레벨 이미지">
+      </div>
+      <div class="level_img" v-else-if="movies.length < 15">
+        <img src="../assets/main/level03.png" alt="레벨 이미지">
+      </div>
+      <div class="level_img" v-else-if="movies.length < 30">
+        <img src="../assets/main/level11.png" alt="레벨 이미지">
+      </div>
+      <p class="mypage_title"> {{ infos.username }}님의 MY PAGE</p>
+      
+    </div>
+    
+
+    <h2>볼래요한 영화</h2>
     <MovieList :movies="movies"/>
-    여기는 구분
     <hr>
     <h1>유저들 목록!! 팔로우하려면 버튼 클릭!</h1>
     <span v-for="user in users" :key="user.id" style="margin-right: 20px">
@@ -114,5 +130,12 @@ export default {
 </script>
 
 <style>
+  .my-page { width: 1200px; margin: 0 auto; }
 
+  .mypage_con01{ width: 400px; height: 400px; padding: 40px 0; margin: 0 auto; margin-top: 80px; border: 1.5px solid #282118; margin-bottom: 50px; border-radius: 10px; }
+  .mypage_title { font-size: 24px; color: #282118; font-weight: bolder; margin-top: 30px; margin-bottom: 50px; }
+  .level_img { width: 250px; height: 250px; margin: 0 auto; }
+  .level_img img { width: 250px; height: 250px; }
+
+  .my-page h2 { font-size: 24px; color: #282118; font-weight: bold;  }
 </style>

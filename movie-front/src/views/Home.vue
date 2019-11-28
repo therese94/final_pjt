@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     
-    <HelloWorld msg=""/>
+    
     <div class="main">
       <div class="main_img_wrap">
         <sequential-entrance fromTop >
