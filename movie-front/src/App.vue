@@ -13,7 +13,7 @@
           <router-link to="/login" class="nav_menu">LOGIN</router-link>
           <a href="http://127.0.0.1:8000/accounts/signup/" class="nav_menu">SIGNUP</a>
         </span>
-       </div> 
+       </div>
     </div>
     <router-view/>
   </div>
@@ -26,6 +26,11 @@ import router from '@/router'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      // movies,
+    }
+  },
 
   computed: {
     isLoggedIn() {

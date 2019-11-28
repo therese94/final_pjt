@@ -42,9 +42,11 @@ def potential(request, user_id, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     if user.potential_movies.filter(pk=movie_id).exists(): # 1개의 데이터라도 존재하면 True
         user.potential_movies.remove(movie)
+        return Response('bolraeyo')
     else:
         user.potential_movies.add(movie)
-    return Response('message')
+        return Response('cancel')
+    
 
 
 @api_view(['POST'])

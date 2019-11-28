@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    
-    <HelloWorld msg=""/>
     <div class="main">
       <div class="main_img_wrap">
         <sequential-entrance fromTop >
@@ -31,7 +29,7 @@
         <div class="main_searchBtn"></div>
         <router-link to="/about" class="main_searchBtn"><img class="main_searchBtn_img" src="../assets/main/main_searchBtn.png"></router-link>
       </div>
-
+      <Recommand :following_users="following_users"/>
     </div>
   </div>
 </template>
@@ -46,16 +44,13 @@
 <script src="../assets/js/main.js" language='javascript'></script>
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import axios from 'axios'
+import Recommand from '../components/Recommand.vue'
 import { mapGetters } from 'vuex'
 import router from '@/router'
+import axios from 'axios'
 
 export default {
   name: 'home',
-  components: {
-    
-  },
   computed: {
     // getters가 가지고 있는 모든 친구들을 computed 에 쫙 뿌려준다고 생각하면 된다.
     ...mapGetters([
@@ -64,30 +59,48 @@ export default {
       'userId'
     ])
   },
+  components: {
+    Recommand,
+  },
+  data() {
+    return {
+      following_users: [],
+    }
+  },
   methods: {
     // 사용자 로그인 유무를 확인하여 로그인되어있지 않을 시 로그인 페이지로 보내겠다.
     checkLoggedIn() {
-
-      // 여기도 이제 필요 없어짐에 따라 지우는 것.
-      // 1. 세션을 시작해서
-      // this.$session.start()
-      // 2. 'jwt' 가 있는지 확인하겠다.
-      // if(!this.$session.has('jwt')){
-
       if(!this.isLoggedIn) {
         // 로그인 페이지로 보내겠다.
         router.push('/login')
       }
     },
-    mounted() {
-      if (this.isLoggedIn){
-        this.checkLoggedIn()
-      }
+    find_followers() {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP
+      axios.get(`${SERVER_IP}/accounts/${this.userId}/`)
+        .then(response => {
+          const id_list = response.data.followers
+          const temp = []
+          for (let index = 0; index < id_list.length; index++) {
+            var user_id = id_list[index]
+            axios.get(`${SERVER_IP}/accounts/${user_id}/`)
+            .then(response => {
+              temp.push(response.data)
+            })
+          }
+          this.following_users = temp
+          console.log(this.following_users)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     },
-    // watch: {
-    //   isLoggedIn() {
-    //   }
-    // },
+  },
+  mounted() {
+    // if (this.isLoggedIn){
+    //   this.checkLoggedIn()
+    // }
+    this.find_followers()
   },
 }
 
@@ -116,4 +129,7 @@ export default {
   .main_txt03 { font-size: 16px; margin-bottom: 40px; }
 
   .main_searchBtn { display: block; right: 0; text-align: right; }
+
+/* 
+  .home_recommend { margin-top: 600px; } */
 </style>

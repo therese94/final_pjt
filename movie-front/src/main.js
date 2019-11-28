@@ -34,6 +34,7 @@ new Vue({
   created () {
     AOS.init()
   },
+  // el: '#app',
   router,
   store,
   render: h => h(App)
