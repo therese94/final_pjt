@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404,get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Movie, Genre, Review, StarRate
+from .models import Movie, Review, StarRate
 from .serializers import MovieSerializer, MoviesSerializer, ReviewSerializer
 User = get_user_model()
 import requests, csv
@@ -23,6 +23,7 @@ def detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(instance=movie)
     return Response(serializer.data)
+
 @api_view(['POST'])
 def create_review(request, movie_id, user_id):
     movie = get_object_or_404(Movie, pk=movie_id)
@@ -35,12 +36,14 @@ def create_review(request, movie_id, user_id):
     review.save()
     serializer = ReviewSerializer(instance = review)
     return Response(serializer.data)
+
 @api_view(['GET'])
 def review(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     reviews = movie.reviews.all()
     serializer = ReviewSerializer(instance=reviews, many=True)
     return Response(serializer.data)
+    
 def make_db(request):
     title_dict = {}
     for i in range(10):
@@ -59,7 +62,8 @@ def make_db(request):
 
         for data in datas:
             movie = Movie()
-
+            
+        
             BASE_URL = 'https://openapi.naver.com/v1/search/movie.json'
             CLIENT_ID = 'm0YexGybNHVSbIufIkoM'
             CLIENT_SECRET = 'Wf5J1MVe_H'
@@ -92,10 +96,47 @@ def make_db(request):
             new_response = requests.get(temp_link)
             html = new_response.text
             soup = bs4.BeautifulSoup(html, 'html.parser')
+
+
             detail_content = soup.select('.con_tx')
             detail_content = detail_content[0].getText()
+
+            temp_rating = soup.select('.st_on')[0].getText()[-5:-1]
+            temp_genres = soup.select('.info_spec')[1].find('span').find('a').getText()
+          
+
             poster_temp = soup.select('.poster img')[0]['src'].split('?')[0]
+            movie.description = detail_content
             movie.poster_url = poster_temp
+            movie.audiRating = float(temp_rating)
+            movie.genres = temp_genres
+
+            # print(detail_content)
+            # print(poster_temp)
+            # print(temp_rating)
+            print(temp_genres)
             movie.save()
+            
+
+            # ########################################################
+            # flag = 0
+            # genres = Genre.objects.all()
+            # for g in genres:
+            #     if str(g.name) == temp_genres:
+            #         genre = get_object_or_404(Genre,name=temp_genres)
+            #         flag = 1
+            #         break
+
+            # if flag == 0:
+            #     genre = Genre()
+            #     genre.name = temp_genres
+            #     genre.save()    
+            # print(genre)
+            # movie.save()
+            # movie.genres.add(genre)
+            # print(movie.genres)
+            ##############################################################
+
+        
 
     return

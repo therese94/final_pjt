@@ -33,17 +33,19 @@
       </div>
 
     </div>
+    <div class="main_content01">
+      <div class="con01_titleWrap">
+        <p class="con01_title"> MOVIE FOR YOU </p>
+        <div class="con01"></div>
+        <div class="con01_borderBottom"></div>
+      </div>
+    </div>
+    
   </div>
+  
 </template>
 
-<script src="../assets/js/jquery-1.12.0.min.js" language='javascript'></script>
-<script src="../assets/js/easing.js" language='javascript'></script>
-<script src="../assets/js/jquery.flexslider-min.js" language='javascript'></script>
-<script src="../assets/js/swiper.min.js" language='javascript'></script>
-<script src="../assets/js/slick.min.js" language='javascript'></script>
-<script src="../assets/js/jquery.flowslider.js" language='javascript'></script>
-<script src="../assets/js/common.js" language='javascript'></script>
-<script src="../assets/js/main.js" language='javascript'></script>
+
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
@@ -97,9 +99,11 @@ export default {
 
 
 <style>
-  .home { width: 1200px; height: 1500px; margin: 0 auto; }
+  .home { width: 100% ; height: 1500px; margin: 0 auto; }
 
-  .main { position: relative; }
+  .main { width: 1200px; position: relative; margin: 0 auto; height: 650px; }
+  .main_content01 { width: 100%; height: 500px; }
+  .con01_title { font-size: 24px; font-weight: bold; color: #353029; }
 
   .sub_img_wrap { width: 500px; height: 240px; position: absolute; top: -210px; right: 200px; z-index: -1; }
   .sub_img { position: absolute; }
@@ -116,4 +120,10 @@ export default {
   .main_txt03 { font-size: 16px; margin-bottom: 40px; }
 
   .main_searchBtn { display: block; right: 0; text-align: right; }
+
+  .con01_titleWrap { width: 100%; height: 45px; background-image: url(../assets/main/main_con01_border.png); text-align: center; background-repeat: no-repeat; background-position: center; }
+  .con01_title { line-height: 45px; font-size: 26px; opacity: 80%; }
+  .con01 { width: 1200px; margin: 0 auto; height: 450px;}
+  .con01_borderBottom {width: 100%; height: 45px; background-image: url(../assets/main/main_con01_border_bottom.png); text-align: center; background-repeat: no-repeat; background-position: center;}
+
 </style>

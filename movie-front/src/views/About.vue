@@ -31,10 +31,7 @@ export default {
       axios.get(`http://127.0.0.1:8000/movies/`)
       .then(response => {
         this.movies = response.data
-        for (let index = 0; index < this.movies.length; index++) {
-          this.movies[index]['id'] = index
-        }
-        console.log(this.movies)
+        
       })
       .catch(error => {
         console.error(error)

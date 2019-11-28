@@ -54,7 +54,7 @@ export default {
 <style>
 .main_logo { display: block; float: left; width: 300px; height: 100px; }
 #app {
-  width: 100%; margin: 0 auto;
+  width: 100%; margin: 0 auto; overflow: hidden;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

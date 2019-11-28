@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from movies.models import Genre, Movie
+from movies.models import Movie
 
 
 # User 모델을 Customizing 한다.
@@ -11,5 +11,5 @@ class User(AbstractUser):
         settings.AUTH_USER_MODEL,
         related_name = 'follwings'      # 역참조를 위해서 필요한것
     )
-    favorite_genres = models.ManyToManyField(Genre, related_name='genre_liked_users')
+    # favorite_genres = models.ManyToManyField(Genre, related_name='genre_liked_users')
     potential_movies = models.ManyToManyField(Movie, related_name='potential_audis')

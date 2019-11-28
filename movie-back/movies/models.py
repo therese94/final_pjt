@@ -2,17 +2,13 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-class Genre(models.Model):
-    name = models.CharField(max_length=20)
-
-
 class Movie(models.Model):
     title = models.CharField(max_length=30)
     audiAcc = models.IntegerField()
+    audiRating = models.FloatField()
     poster_url = models.CharField(max_length=140)
     description = models.TextField()
-    genres = models.ManyToManyField(Genre, related_name='movies')
+    genres = models.TextField()
 
 
 class Review(models.Model):
