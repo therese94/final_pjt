@@ -11,7 +11,7 @@
         </span>
         <span v-else>
           <router-link to="/login" class="nav_menu">LOGIN</router-link>
-          <a href="http://127.0.0.1:8000/accounts/signup/" class="nav_menu">SIGNUP</a>
+          <a href="https://mooving-api.herokuapp.com/accounts/signup/" class="nav_menu">SIGNUP</a>
         </span>
        </div> 
     </div>
