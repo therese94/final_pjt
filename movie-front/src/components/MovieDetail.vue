@@ -71,7 +71,7 @@ export default {
     return {
       score: '',
       content: '',
-      bolraeyoTF: 'cancel',
+      bolraeyoTF: 'bolraeyo',
     }
   },
   computed: {
