@@ -13,7 +13,7 @@
     "bootstrap": "^4.4.0",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.3.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "popper.js": "^1.16.0",
     "veu": "^1.0.1",
