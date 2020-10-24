@@ -1,4 +1,4 @@
-# June's Movie Readme
+# README
 
 ## movie-front setting
 
